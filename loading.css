@@ -1,0 +1,109 @@
+/* ==========================================================================
+   CHI CINEMA — LOADING SCREEN
+   File: styles/loading.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   A full-screen Netflix-style splash shown while a page's first content
+   is being prepared, with an animated logo (pulse + marquee glow) and a
+   fade-out transition. Included on every page; hidden via
+   animation.js's hideLoadingScreen(), called from each page controller's
+   init(). Added as an extension to the original build — see the
+   project's README "Future Expansion" history for context.
+   ========================================================================== */
+
+.cc-loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cc-z-loading-screen);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--cc-color-stage-0);
+  transition: opacity var(--cc-duration-slow) var(--cc-ease-standard);
+}
+
+.cc-loading-screen.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Animated logo mark
+   -------------------------------------------------------------------------- */
+
+.cc-loading-screen__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cc-space-md);
+}
+
+.cc-loading-screen__brand {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-2xl);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  text-shadow: var(--cc-shadow-marquee);
+  animation: cc-loading-pulse 1.6s ease-in-out infinite;
+}
+
+.cc-loading-screen__brand span {
+  color: var(--cc-color-crimson);
+}
+
+@keyframes cc-loading-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: var(--cc-shadow-marquee);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(0.97);
+    text-shadow:
+      0 0 8px var(--cc-color-gold-glow),
+      0 0 20px rgba(212, 175, 106, 0.15);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Filmstrip loading bar (a small nod to the sprocket motif, used only
+   here and on hero/row skeletons — see the design plan's restraint note
+   in variables.css)
+   -------------------------------------------------------------------------- */
+
+.cc-loading-screen__bar {
+  width: 160px;
+  height: 3px;
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(242, 240, 236, 0.15);
+  overflow: hidden;
+}
+
+.cc-loading-screen__bar-fill {
+  height: 100%;
+  width: 40%;
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-crimson);
+  animation: cc-loading-bar 1.2s ease-in-out infinite;
+}
+
+@keyframes cc-loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(350%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-loading-screen__brand {
+    animation: none;
+  }
+  .cc-loading-screen__bar-fill {
+    animation: none;
+    width: 100%;
+  }
+}

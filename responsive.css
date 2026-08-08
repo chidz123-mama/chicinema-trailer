@@ -1,0 +1,171 @@
+/* ==========================================================================
+   CHI CINEMA — RESPONSIVE (shared/global breakpoints)
+   File: styles/responsive.css
+   Layer: 1 (depends on: variables.css, global.css, navbar.css, footer.css)
+
+   SCOPE: this file only handles breakpoint behavior for GLOBAL/shared
+   components — navbar, footer, and container-level layout. Page-specific
+   components (hero, cards, rows, movie details, player, login, register,
+   search) each own their responsive rules at the bottom of their own
+   stylesheet. This split means responsive.css never has to be reopened
+   as new pages are added — a hard requirement per the project's "locked
+   file" rule.
+
+   LOAD ORDER NOTE: on the actual HTML pages, this file is linked AFTER
+   every page-specific stylesheet (not before, despite its position in
+   the dependency-build sequence) — CSS specificity ties are broken by
+   source order, so a shared override only reliably wins if it loads
+   last. Each page's <link> order will be:
+   reset → variables → global → navbar → footer → [page-specific files]
+   → responsive.
+
+   Breakpoints (mobile-first; matches --cc-bp-* tokens in variables.css):
+     ≤480px   mobile
+     ≤768px   tablet
+     ≤1024px  laptop
+     ≥1440px  desktop / large screens
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Desktop enhancement (≥1440px) — roomier container padding only;
+   variables.css's clamp()-based spacing already scales most things.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1440px) {
+  .cc-container,
+  .cc-navbar__inner,
+  .cc-footer__inner {
+    padding-inline: var(--cc-space-2xl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Laptop and below (≤1024px) — collapse the navbar into a hamburger menu
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .cc-navbar__nav {
+    position: fixed;
+    top: var(--cc-navbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--cc-space-lg);
+    padding: var(--cc-space-xl) var(--cc-container-pad);
+    background-color: var(--cc-color-stage-0);
+    transform: translateX(-100%);
+    transition: transform var(--cc-duration-slow) var(--cc-ease-emphasized);
+    z-index: var(--cc-z-navbar);
+    overflow-y: auto;
+  }
+
+  .cc-navbar__nav.is-open {
+    transform: translateX(0);
+  }
+
+  .cc-navbar__link {
+    font-size: var(--cc-text-lg);
+  }
+
+  .cc-navbar__toggle {
+    display: flex;
+  }
+
+  .cc-navbar__search.is-expanded {
+    width: 160px;
+  }
+
+  .cc-footer__top {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    row-gap: var(--cc-space-lg);
+  }
+
+  .cc-footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet and below (≤768px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .cc-navbar__brand-text {
+    font-size: var(--cc-text-md);
+  }
+
+  .cc-navbar__search {
+    display: none;
+  }
+
+  .cc-footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cc-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: var(--cc-text-2xl);
+  }
+
+  h2 {
+    font-size: var(--cc-text-xl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile (≤480px)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .cc-container,
+  .cc-navbar__inner,
+  .cc-footer__inner {
+    padding-inline: var(--cc-space-sm);
+  }
+
+  .cc-navbar__actions {
+    gap: var(--cc-space-2xs);
+  }
+
+  .cc-navbar__login-link {
+    padding: var(--cc-space-3xs) var(--cc-space-sm);
+    font-size: var(--cc-text-xs);
+  }
+
+  .cc-footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .cc-footer__socials {
+    flex-wrap: wrap;
+  }
+
+  .cc-footer__legal-list {
+    flex-wrap: wrap;
+    gap: var(--cc-space-xs);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Shared visibility utilities (used across any component's markup)
+   -------------------------------------------------------------------------- */
+
+.cc-hide-mobile {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .cc-hide-mobile {
+    display: revert;
+  }
+
+  .cc-hide-desktop {
+    display: none;
+  }
+}

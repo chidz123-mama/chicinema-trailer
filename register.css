@@ -1,0 +1,34 @@
+/* Registration-only additions to the shared auth form styles. */
+
+.cc-auth-password-hint {
+  margin: -0.55rem 0 0;
+  min-height: 1.2rem;
+  color: #b9b7b5;
+  font-size: 0.8rem;
+}
+
+.cc-password-strength {
+  display: flex;
+  gap: 4px;
+  margin-top: -0.45rem;
+}
+
+.cc-password-strength__bar {
+  height: 3px;
+  flex: 1;
+  border-radius: 999px;
+  background-color: rgba(242, 240, 236, 0.15);
+  transition: background-color 160ms ease;
+}
+
+.cc-password-strength__bar.is-weak {
+  background-color: #e50914;
+}
+
+.cc-password-strength__bar.is-medium {
+  background-color: #f5b942;
+}
+
+.cc-password-strength__bar.is-strong {
+  background-color: #52c41a;
+}

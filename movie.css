@@ -1,0 +1,397 @@
+/* ==========================================================================
+   CHI CINEMA — MOVIE DETAILS
+   File: styles/movie.css
+   Layer: 1 (depends on: variables.css, global.css, rows.css, cards.css)
+
+   Styles for movie.html: backdrop header with overlapping poster, meta
+   pills, stat cards (budget/revenue/popularity/votes), cast/crew grids,
+   and an image gallery. Recommendations/Similar sections reuse .cc-row
+   and .cc-card as-is — no new classes needed for those.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Backdrop header
+   -------------------------------------------------------------------------- */
+
+.cc-movie-hero {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background-color: var(--cc-color-stage-0);
+}
+
+.cc-movie-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.cc-movie-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background-image: var(--cc-gradient-hero-side), var(--cc-gradient-hero-scrim);
+}
+
+.cc-movie-hero__inner {
+  position: relative;
+  z-index: var(--cc-z-base);
+  width: 100%;
+  max-width: var(--cc-container-max);
+  margin-inline: auto;
+  padding: var(--cc-space-3xl) var(--cc-container-pad) var(--cc-space-2xl);
+  display: flex;
+  gap: var(--cc-space-xl);
+  align-items: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   Poster
+   -------------------------------------------------------------------------- */
+
+.cc-movie-hero__poster {
+  flex-shrink: 0;
+  width: 220px;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--cc-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--cc-shadow-panel);
+  border: 1px solid rgba(242, 240, 236, 0.12);
+}
+
+.cc-movie-hero__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   Title + meta
+   -------------------------------------------------------------------------- */
+
+.cc-movie-hero__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cc-movie-hero__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-3xl);
+  letter-spacing: var(--cc-tracking-marquee);
+  text-shadow: var(--cc-shadow-marquee);
+  color: var(--cc-color-text-primary);
+  margin-bottom: var(--cc-space-2xs);
+}
+
+.cc-movie-hero__tagline {
+  font-size: var(--cc-text-md);
+  font-style: italic;
+  color: var(--cc-color-gold);
+  margin-bottom: var(--cc-space-sm);
+}
+
+.cc-movie-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cc-space-sm);
+  margin-bottom: var(--cc-space-sm);
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-movie-hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--cc-color-gold);
+  font-weight: 500;
+}
+
+.cc-movie-hero__genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cc-space-2xs);
+  margin-bottom: var(--cc-space-md);
+}
+
+.cc-movie-hero__genre-pill {
+  padding: 4px var(--cc-space-sm);
+  border-radius: var(--cc-radius-pill);
+  border: 1px solid rgba(242, 240, 236, 0.25);
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-movie-hero__overview {
+  font-size: var(--cc-text-md);
+  line-height: var(--cc-leading-normal);
+  color: var(--cc-color-text-secondary);
+  max-width: 70ch;
+  margin-bottom: var(--cc-space-lg);
+}
+
+.cc-movie-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cc-space-sm);
+}
+
+.cc-movie-hero__favorite.is-active {
+  color: var(--cc-color-gold);
+  border-color: var(--cc-color-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Stat cards (budget, revenue, popularity, vote count, status, language)
+   -------------------------------------------------------------------------- */
+
+.cc-movie-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--cc-space-sm);
+  padding: var(--cc-space-lg) var(--cc-container-pad);
+  max-width: var(--cc-container-max);
+  margin-inline: auto;
+}
+
+.cc-movie-stat {
+  padding: var(--cc-space-md);
+  border-radius: var(--cc-radius-md);
+  background-color: var(--cc-color-stage-1);
+  border: var(--cc-border-hairline);
+}
+
+.cc-movie-stat__label {
+  font-size: var(--cc-text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--cc-tracking-wide);
+  color: var(--cc-color-text-muted);
+  margin-bottom: var(--cc-space-3xs);
+}
+
+.cc-movie-stat__value {
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-md);
+  font-weight: 500;
+  color: var(--cc-color-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Section wrapper (Cast, Crew, Gallery share this shell)
+   -------------------------------------------------------------------------- */
+
+.cc-movie-section {
+  padding: var(--cc-space-lg) var(--cc-container-pad);
+  max-width: var(--cc-container-max);
+  margin-inline: auto;
+}
+
+.cc-movie-section__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-xl);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  margin-bottom: var(--cc-space-md);
+}
+
+/* --------------------------------------------------------------------------
+   Cast / Crew grid
+   -------------------------------------------------------------------------- */
+
+.cc-cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: var(--cc-space-md);
+}
+
+.cc-cast-member {
+  text-align: center;
+}
+
+.cc-cast-member__photo-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: var(--cc-space-2xs);
+  background-color: var(--cc-color-stage-1);
+  border: 1px solid rgba(242, 240, 236, 0.1);
+}
+
+.cc-cast-member__photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cc-cast-member__name {
+  font-size: var(--cc-text-sm);
+  font-weight: 600;
+  color: var(--cc-color-text-primary);
+}
+
+.cc-cast-member__character {
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-muted);
+}
+
+.cc-crew-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--cc-space-sm);
+}
+
+.cc-crew-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.cc-crew-item__name {
+  font-size: var(--cc-text-sm);
+  font-weight: 600;
+  color: var(--cc-color-text-primary);
+}
+
+.cc-crew-item__job {
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Gallery
+   -------------------------------------------------------------------------- */
+
+.cc-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--cc-space-sm);
+}
+
+.cc-gallery-item {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--cc-radius-md);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.cc-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-gallery-item:hover img {
+  transform: scale(1.06);
+}
+
+/* --------------------------------------------------------------------------
+   Trailer modal (lightweight lightbox for embedded YouTube trailer)
+   -------------------------------------------------------------------------- */
+
+.cc-trailer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--cc-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cc-space-lg);
+}
+
+.cc-trailer-modal[hidden] {
+  display: none;
+}
+
+.cc-trailer-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(11, 11, 15, 0.9);
+  backdrop-filter: var(--cc-blur-sm);
+  -webkit-backdrop-filter: var(--cc-blur-sm);
+}
+
+.cc-trailer-modal__frame-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  z-index: var(--cc-z-modal);
+  border-radius: var(--cc-radius-md);
+  overflow: hidden;
+  box-shadow: var(--cc-shadow-panel);
+}
+
+.cc-trailer-modal__frame-wrap iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.cc-trailer-modal__close {
+  position: absolute;
+  top: calc(-1 * var(--cc-space-lg));
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-stage-2);
+  color: var(--cc-color-text-primary);
+  z-index: var(--cc-z-modal);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .cc-movie-hero__poster {
+    width: 170px;
+  }
+
+  .cc-movie-hero__title {
+    font-size: var(--cc-text-2xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .cc-movie-hero__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: var(--cc-space-2xl);
+  }
+
+  .cc-movie-hero__poster {
+    width: 140px;
+  }
+
+  .cc-movie-hero {
+    min-height: 50vh;
+  }
+
+  .cc-movie-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .cc-movie-hero__actions .cc-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .cc-cast-grid {
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  }
+
+  .cc-movie-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

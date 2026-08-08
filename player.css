@@ -1,0 +1,402 @@
+/* ==========================================================================
+   CHI CINEMA — PLAYER
+   File: styles/player.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   Two playback modes share this stylesheet:
+     1. Local MP4 mode (FEATURE_FLAGS.useLocalMp4 = true) — a fully custom
+        control bar (play/pause, scrubber, volume, speed, captions, PiP,
+        fullscreen) styled here.
+     2. YouTube trailer fallback (default) — embeds the official trailer
+        via iframe using YouTube's own native controls, since scripting
+        a cross-origin YouTube embed's playback requires the separate
+        YouTube IFrame API, which is out of scope for this build. The
+        custom control bar is simply hidden in this mode
+        (.cc-player--youtube-mode), so switching FEATURE_FLAGS.useLocalMp4
+        to true later only changes which controls show — no HTML/CSS
+        rewrite needed, exactly as required.
+   ========================================================================== */
+
+.cc-player {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+}
+
+.cc-player__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-player__video,
+.cc-player__stage iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #000;
+}
+
+/* --------------------------------------------------------------------------
+   Top bar — back button + title, fades with controls
+   -------------------------------------------------------------------------- */
+
+.cc-player__top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--cc-z-navbar);
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-sm);
+  padding: var(--cc-space-md) var(--cc-container-pad);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  transition: opacity var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-player__back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--cc-color-text-primary);
+}
+
+.cc-player__back-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cc-player__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-lg);
+  letter-spacing: var(--cc-tracking-wide);
+  color: var(--cc-color-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Center play/pause overlay button (shown when paused or before first play)
+   -------------------------------------------------------------------------- */
+
+.cc-player__center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--cc-z-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background-color: rgba(230, 57, 80, 0.9);
+  color: var(--cc-color-text-primary);
+  transition:
+    transform var(--cc-duration-fast) var(--cc-ease-standard),
+    opacity var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-player__center-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.cc-player__center-btn[hidden] {
+  display: none;
+}
+
+.cc-player__center-btn svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   Loading spinner
+   -------------------------------------------------------------------------- */
+
+.cc-player__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--cc-z-base);
+  pointer-events: none;
+}
+
+.cc-player__loading[hidden] {
+  display: none;
+}
+
+.cc-player__spinner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--cc-color-crimson);
+  animation: cc-spin 0.8s linear infinite;
+}
+
+@keyframes cc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Bottom control bar (local MP4 mode only)
+   -------------------------------------------------------------------------- */
+
+.cc-player__controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--cc-z-navbar);
+  padding: var(--cc-space-lg) var(--cc-container-pad) var(--cc-space-md);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+  opacity: 1;
+  transition: opacity var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-player.is-controls-hidden .cc-player__controls,
+.cc-player.is-controls-hidden .cc-player__top-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Progress / scrubber */
+
+.cc-player__progress {
+  position: relative;
+  width: 100%;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: var(--cc-space-sm);
+}
+
+.cc-player__progress-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(255, 255, 255, 0.25);
+  transition: height var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-player__progress:hover .cc-player__progress-track {
+  height: 6px;
+}
+
+.cc-player__progress-buffered {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.cc-player__progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-crimson);
+}
+
+.cc-player__progress-thumb {
+  position: absolute;
+  top: 50%;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: var(--cc-color-crimson);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 4px rgba(230, 57, 80, 0.25);
+}
+
+/* Controls row */
+
+.cc-player__controls-row {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-sm);
+}
+
+.cc-player__controls-row--right {
+  margin-left: auto;
+}
+
+.cc-player__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--cc-radius-sm);
+  color: var(--cc-color-text-primary);
+  transition: background-color var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-player__btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.cc-player__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cc-player__btn.is-active {
+  color: var(--cc-color-gold);
+}
+
+.cc-player__time {
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+  white-space: nowrap;
+  min-width: 96px;
+}
+
+/* Volume */
+
+.cc-player__volume {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-2xs);
+}
+
+.cc-player__volume-slider {
+  width: 90px;
+  height: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: var(--cc-radius-pill);
+  cursor: pointer;
+}
+
+.cc-player__volume-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--cc-color-text-primary);
+}
+
+.cc-player__volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cc-color-text-primary);
+}
+
+/* Playback speed */
+
+.cc-player__speed-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: var(--cc-space-3xs) var(--cc-space-sm);
+  border-radius: var(--cc-radius-sm);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--cc-color-text-primary);
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-sm);
+}
+
+.cc-player__speed-select option {
+  color: var(--cc-color-text-inverse);
+}
+
+/* --------------------------------------------------------------------------
+   YouTube fallback mode — hide the custom control bar/center button
+   entirely; the iframe's native player controls take over.
+   -------------------------------------------------------------------------- */
+
+.cc-player--youtube-mode .cc-player__controls,
+.cc-player--youtube-mode .cc-player__center-btn {
+  display: none;
+}
+
+.cc-player--youtube-mode .cc-player__top-bar {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Fallback notice (shown briefly when a local MP4 isn't found, before the
+   YouTube trailer takes over)
+   -------------------------------------------------------------------------- */
+
+.cc-player__fallback-notice {
+  position: absolute;
+  bottom: var(--cc-space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--cc-space-2xs) var(--cc-space-md);
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-glass-fill);
+  border: var(--cc-border-hairline);
+  backdrop-filter: var(--cc-blur-md);
+  -webkit-backdrop-filter: var(--cc-blur-md);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+  z-index: var(--cc-z-toast);
+}
+
+.cc-player__fallback-notice[hidden] {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .cc-player__title {
+    font-size: var(--cc-text-md);
+  }
+
+  .cc-player__volume-slider {
+    width: 60px;
+  }
+
+  .cc-player__time {
+    min-width: 76px;
+    font-size: var(--cc-text-xs);
+  }
+
+  .cc-player__center-btn {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cc-player__volume {
+    display: none;
+  }
+
+  .cc-player__speed-select {
+    display: none;
+  }
+
+  .cc-player__controls {
+    padding-inline: var(--cc-space-sm);
+  }
+}

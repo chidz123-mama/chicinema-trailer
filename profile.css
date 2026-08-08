@@ -1,0 +1,9 @@
+/* Profile page layout and account-specific components. */
+.cc-profile-header { display: flex; align-items: center; gap: var(--cc-space-lg); padding: var(--cc-space-xl); flex-wrap: wrap; }
+.cc-profile-avatar { width: 96px; height: 96px; border: 2px solid var(--cc-color-gold-dim); border-radius: 50%; object-fit: cover; }
+.cc-profile-identity { flex: 1; min-width: 200px; }
+.cc-profile-username { color: var(--cc-color-text-primary); font-family: var(--cc-font-display); font-size: var(--cc-text-xl); letter-spacing: var(--cc-tracking-marquee); }
+.cc-profile-email { margin-top: var(--cc-space-3xs); color: var(--cc-color-text-secondary); }
+.cc-profile-member-since { margin-top: var(--cc-space-2xs); }
+.cc-profile-history-item { text-decoration: none; }
+@media (max-width: 560px) { .cc-profile-header { align-items: flex-start; padding: var(--cc-space-lg); } .cc-profile-header > .cc-btn { width: 100%; } }

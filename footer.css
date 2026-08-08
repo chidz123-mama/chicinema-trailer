@@ -1,0 +1,159 @@
+/* ==========================================================================
+   CHI CINEMA — FOOTER
+   File: styles/footer.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   Shared footer used on every page: brand recap, link columns, social
+   icons, and a legal line. Deliberately quiet relative to the navbar/hero
+   — no glow effects here, just clean structure.
+   ========================================================================== */
+
+.cc-footer {
+  border-top: var(--cc-border-hairline);
+  background-color: var(--cc-color-stage-1);
+  padding-block: var(--cc-space-2xl) var(--cc-space-lg);
+  margin-top: var(--cc-space-3xl);
+}
+
+.cc-footer__inner {
+  width: 100%;
+  max-width: var(--cc-container-max);
+  margin-inline: auto;
+  padding-inline: var(--cc-container-pad);
+}
+
+.cc-footer__top {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr);
+  gap: var(--cc-space-xl);
+  padding-bottom: var(--cc-space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Brand column
+   -------------------------------------------------------------------------- */
+
+.cc-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-space-sm);
+}
+
+.cc-footer__brand-text {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-lg);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+}
+
+.cc-footer__brand-text span {
+  color: var(--cc-color-crimson);
+}
+
+.cc-footer__tagline {
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-muted);
+  max-width: 32ch;
+}
+
+.cc-footer__socials {
+  display: flex;
+  gap: var(--cc-space-2xs);
+  margin-top: var(--cc-space-2xs);
+}
+
+.cc-footer__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-stage-2);
+  color: var(--cc-color-text-secondary);
+  transition:
+    background-color var(--cc-duration-fast) var(--cc-ease-standard),
+    color var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-footer__social-link:hover {
+  background-color: var(--cc-color-crimson);
+  color: var(--cc-color-text-primary);
+}
+
+.cc-footer__social-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   Link columns
+   -------------------------------------------------------------------------- */
+
+.cc-footer__column-title {
+  font-size: var(--cc-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--cc-tracking-wide);
+  color: var(--cc-color-text-muted);
+  margin-bottom: var(--cc-space-sm);
+}
+
+.cc-footer__link-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-space-xs);
+}
+
+.cc-footer__link {
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+  width: fit-content;
+}
+
+.cc-footer__link:hover {
+  color: var(--cc-color-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Bottom bar: divider, copyright, legal links
+   -------------------------------------------------------------------------- */
+
+.cc-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--cc-space-sm);
+  padding-top: var(--cc-space-lg);
+  border-top: var(--cc-border-hairline);
+}
+
+.cc-footer__copyright {
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-muted);
+  letter-spacing: var(--cc-tracking-wide);
+}
+
+.cc-footer__legal-list {
+  display: flex;
+  gap: var(--cc-space-md);
+}
+
+.cc-footer__legal-link {
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-muted);
+}
+
+.cc-footer__legal-link:hover {
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-footer__disclaimer {
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-muted);
+  margin-top: var(--cc-space-sm);
+  opacity: 0.75;
+}

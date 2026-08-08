@@ -1,0 +1,276 @@
+/* ==========================================================================
+   CHI CINEMA — LOGIN
+   File: styles/login.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   Shared shell for both login.html and register.html: a centered glass
+   card over a dimmed cinematic backdrop. register.css reuses every
+   .cc-auth-* / .cc-form-* class defined here rather than redefining them,
+   so the two pages stay visually consistent by construction.
+   ========================================================================== */
+
+.cc-auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--cc-space-lg);
+  overflow: hidden;
+}
+
+.cc-auth-page__backdrop {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(11, 11, 15, 0.75) 0%,
+      rgba(11, 11, 15, 0.92) 100%
+    ),
+    var(--cc-auth-backdrop-image, none);
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.cc-auth-page__brand {
+  position: absolute;
+  top: var(--cc-space-lg);
+  left: var(--cc-container-pad);
+}
+
+.cc-auth-page__brand-text {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-lg);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  text-shadow: var(--cc-shadow-marquee);
+}
+
+.cc-auth-page__brand-text span {
+  color: var(--cc-color-crimson);
+}
+
+/* --------------------------------------------------------------------------
+   Card
+   -------------------------------------------------------------------------- */
+
+.cc-auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--cc-space-2xl) var(--cc-space-xl);
+  border-radius: var(--cc-radius-lg);
+  background-color: var(--cc-color-glass-fill);
+  border: var(--cc-border-hairline);
+  backdrop-filter: var(--cc-blur-lg);
+  -webkit-backdrop-filter: var(--cc-blur-lg);
+  box-shadow: var(--cc-shadow-panel);
+}
+
+.cc-auth-card__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-xl);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  margin-bottom: var(--cc-space-3xs);
+  text-align: center;
+}
+
+.cc-auth-card__subtitle {
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-muted);
+  text-align: center;
+  margin-bottom: var(--cc-space-xl);
+}
+
+/* --------------------------------------------------------------------------
+   Form
+   -------------------------------------------------------------------------- */
+
+.cc-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-space-md);
+}
+
+.cc-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-space-2xs);
+}
+
+.cc-form-label {
+  font-size: var(--cc-text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--cc-tracking-wide);
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-form-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cc-form-input {
+  width: 100%;
+  padding: var(--cc-space-sm) var(--cc-space-md);
+  border-radius: var(--cc-radius-md);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(242, 240, 236, 0.15);
+  color: var(--cc-color-text-primary);
+  font-size: var(--cc-text-base);
+  transition: border-color var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-form-input::placeholder {
+  color: var(--cc-color-text-muted);
+}
+
+.cc-form-input:focus {
+  border-color: var(--cc-color-gold);
+}
+
+.cc-form-input.has-error {
+  border-color: var(--cc-color-crimson);
+}
+
+.cc-form-input--with-toggle {
+  padding-right: var(--cc-space-3xl);
+}
+
+.cc-form-toggle-visibility {
+  position: absolute;
+  right: var(--cc-space-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--cc-radius-sm);
+  color: var(--cc-color-text-muted);
+}
+
+.cc-form-toggle-visibility:hover {
+  color: var(--cc-color-text-primary);
+}
+
+.cc-form-toggle-visibility svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cc-form-error-text {
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-crimson);
+  min-height: 1em;
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox row (Remember Me)
+   -------------------------------------------------------------------------- */
+
+.cc-form-checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-2xs);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+  cursor: pointer;
+}
+
+.cc-form-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--cc-color-crimson);
+  cursor: pointer;
+}
+
+.cc-form-forgot-link {
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-muted);
+}
+
+.cc-form-forgot-link:hover {
+  color: var(--cc-color-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Submit + banner + switch link
+   -------------------------------------------------------------------------- */
+
+.cc-auth-submit-btn {
+  width: 100%;
+  justify-content: center;
+  padding-block: var(--cc-space-sm);
+  margin-top: var(--cc-space-2xs);
+}
+
+.cc-auth-submit-btn:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.cc-form-banner {
+  padding: var(--cc-space-sm);
+  border-radius: var(--cc-radius-sm);
+  background-color: rgba(230, 57, 80, 0.12);
+  border: 1px solid rgba(230, 57, 80, 0.35);
+  color: var(--cc-color-crimson);
+  font-size: var(--cc-text-sm);
+  text-align: center;
+}
+
+.cc-form-banner[hidden] {
+  display: none;
+}
+
+.cc-form-banner--success {
+  background-color: rgba(76, 175, 125, 0.12);
+  border-color: rgba(76, 175, 125, 0.35);
+  color: var(--cc-color-success);
+}
+
+.cc-auth-switch {
+  margin-top: var(--cc-space-lg);
+  text-align: center;
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-muted);
+}
+
+.cc-auth-switch-link {
+  color: var(--cc-color-gold);
+  font-weight: 600;
+}
+
+.cc-auth-switch-link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .cc-auth-card {
+    padding: var(--cc-space-xl) var(--cc-space-lg);
+  }
+
+  .cc-auth-page__brand {
+    position: static;
+    margin-bottom: var(--cc-space-lg);
+    text-align: center;
+  }
+
+  .cc-auth-page {
+    flex-direction: column;
+  }
+}

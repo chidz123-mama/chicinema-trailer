@@ -1,0 +1,276 @@
+/* ==========================================================================
+   CHI CINEMA — HERO
+   File: styles/hero.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   The full-bleed rotating hero banner on index.html. Slides are stacked
+   absolutely and crossfaded by animation.js's crossfadeHero(); this file
+   only owns layout/visual treatment, not the rotation timing itself.
+   ========================================================================== */
+
+.cc-hero {
+  position: relative;
+  width: 100%;
+  height: 92vh;
+  min-height: 520px;
+  max-height: 920px;
+  overflow: hidden;
+  background-color: var(--cc-color-stage-0);
+}
+
+.cc-hero__slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.cc-hero__slide[hidden] {
+  display: none;
+}
+
+.cc-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* Gradient scrims layered over the backdrop for legible text + smooth
+   transition into the row content below */
+.cc-hero__scrim {
+  position: absolute;
+  inset: 0;
+  background-image: var(--cc-gradient-hero-side), var(--cc-gradient-hero-scrim);
+}
+
+/* --------------------------------------------------------------------------
+   Content block (title, meta, overview, CTAs)
+   -------------------------------------------------------------------------- */
+
+.cc-hero__content {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 0 var(--cc-container-pad) var(--cc-space-3xl);
+  max-width: 900px;
+  z-index: var(--cc-z-base);
+}
+
+.cc-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cc-space-3xs);
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-xs);
+  font-weight: 500;
+  letter-spacing: var(--cc-tracking-wide);
+  text-transform: uppercase;
+  color: var(--cc-color-gold);
+  margin-bottom: var(--cc-space-sm);
+}
+
+.cc-hero__badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cc-hero__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-3xl);
+  line-height: var(--cc-leading-tight);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  text-shadow: var(--cc-shadow-marquee);
+  margin-bottom: var(--cc-space-md);
+  max-width: 20ch;
+}
+
+.cc-hero__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--cc-space-sm);
+  margin-bottom: var(--cc-space-md);
+}
+
+.cc-hero__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cc-space-3xs);
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-sm);
+  font-weight: 500;
+  color: var(--cc-color-gold);
+}
+
+.cc-hero__rating svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--cc-color-gold);
+}
+
+.cc-hero__year,
+.cc-hero__runtime {
+  font-family: var(--cc-font-mono);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-hero__genres {
+  display: flex;
+  gap: var(--cc-space-2xs);
+  flex-wrap: wrap;
+}
+
+.cc-hero__genre-pill {
+  padding: 2px var(--cc-space-xs);
+  border: 1px solid rgba(242, 240, 236, 0.25);
+  border-radius: var(--cc-radius-pill);
+  font-size: var(--cc-text-xs);
+  color: var(--cc-color-text-secondary);
+}
+
+.cc-hero__overview {
+  font-size: var(--cc-text-md);
+  line-height: var(--cc-leading-normal);
+  color: var(--cc-color-text-secondary);
+  margin-bottom: var(--cc-space-lg);
+  max-width: 60ch;
+}
+
+.cc-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-sm);
+}
+
+.cc-hero__btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Slide indicators (dots) — bottom-right, click to jump to a slide
+   -------------------------------------------------------------------------- */
+
+.cc-hero__indicators {
+  position: absolute;
+  right: var(--cc-container-pad);
+  bottom: var(--cc-space-lg);
+  display: flex;
+  gap: var(--cc-space-2xs);
+  z-index: var(--cc-z-base);
+}
+
+.cc-hero__indicator {
+  width: 28px;
+  height: 3px;
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(242, 240, 236, 0.3);
+  transition:
+    background-color var(--cc-duration-fast) var(--cc-ease-standard),
+    width var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-hero__indicator:hover {
+  background-color: rgba(242, 240, 236, 0.55);
+}
+
+.cc-hero__indicator.is-active {
+  width: 44px;
+  background-color: var(--cc-color-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Loading skeleton state (shown before the first hero slide resolves)
+   -------------------------------------------------------------------------- */
+
+.cc-hero__skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--cc-color-stage-1) 0%,
+    var(--cc-color-stage-0) 100%
+  );
+}
+
+.cc-hero__skeleton-content {
+  position: absolute;
+  left: var(--cc-container-pad);
+  bottom: var(--cc-space-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cc-space-sm);
+  width: 100%;
+  max-width: 640px;
+}
+
+.cc-hero__skeleton-title {
+  height: 56px;
+  width: 70%;
+}
+
+.cc-hero__skeleton-line {
+  height: 16px;
+  width: 90%;
+}
+
+.cc-hero__skeleton-line--short {
+  width: 55%;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .cc-hero {
+    height: 80vh;
+  }
+
+  .cc-hero__content {
+    max-width: 640px;
+    padding-bottom: var(--cc-space-2xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .cc-hero {
+    height: 72vh;
+    min-height: 460px;
+  }
+
+  .cc-hero__overview {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .cc-hero__indicators {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .cc-hero__content {
+    padding-bottom: var(--cc-space-xl);
+  }
+
+  .cc-hero__actions {
+    flex-wrap: wrap;
+  }
+
+  .cc-hero__actions .cc-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .cc-hero__title {
+    font-size: var(--cc-text-2xl);
+  }
+}

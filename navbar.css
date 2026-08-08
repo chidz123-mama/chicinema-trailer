@@ -1,0 +1,320 @@
+/* ==========================================================================
+   CHI CINEMA — NAVBAR
+   File: styles/navbar.css
+   Layer: 1 (depends on: variables.css, global.css)
+
+   Sticky, transparent-over-hero navigation that gains a solid glass
+   background once the page scrolls (toggled via the .is-scrolled class,
+   applied by each page controller's scroll listener). Includes the
+   mobile hamburger menu — no separate mobile-only stylesheet, handled
+   here + responsive.css breakpoints.
+   ========================================================================== */
+
+.cc-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--cc-z-navbar);
+  height: var(--cc-navbar-height);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition:
+    background-color var(--cc-duration-base) var(--cc-ease-standard),
+    box-shadow var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-navbar.is-scrolled {
+  background: var(--cc-gradient-nav-scrolled);
+  backdrop-filter: var(--cc-blur-md);
+  -webkit-backdrop-filter: var(--cc-blur-md);
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+}
+
+.cc-navbar__inner {
+  width: 100%;
+  max-width: var(--cc-container-max);
+  margin-inline: auto;
+  padding-inline: var(--cc-container-pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cc-space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Logo
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-2xs);
+  flex-shrink: 0;
+}
+
+.cc-navbar__brand-mark {
+  height: 28px;
+  width: auto;
+}
+
+.cc-navbar__brand-text {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-lg);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+  text-shadow: var(--cc-shadow-marquee);
+  white-space: nowrap;
+}
+
+.cc-navbar__brand-text span {
+  color: var(--cc-color-crimson);
+}
+
+/* --------------------------------------------------------------------------
+   Primary navigation links
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-md);
+  list-style: none;
+}
+
+.cc-navbar__link {
+  position: relative;
+  font-size: var(--cc-text-sm);
+  font-weight: 600;
+  letter-spacing: var(--cc-tracking-wide);
+  text-transform: uppercase;
+  color: var(--cc-color-text-secondary);
+  padding-block: var(--cc-space-3xs);
+  white-space: nowrap;
+}
+
+.cc-navbar__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -4px;
+  height: 2px;
+  background-color: var(--cc-color-gold);
+  transition: right var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-navbar__link:hover {
+  color: var(--cc-color-text-primary);
+}
+
+.cc-navbar__link:hover::after {
+  right: 0;
+}
+
+.cc-navbar__link.is-active {
+  color: var(--cc-color-text-primary);
+}
+
+.cc-navbar__link.is-active::after {
+  right: 0;
+  background-color: var(--cc-color-crimson);
+}
+
+/* --------------------------------------------------------------------------
+   Right-side actions: search icon, avatar/login
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-sm);
+  flex-shrink: 0;
+}
+
+.cc-navbar__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--cc-radius-pill);
+  color: var(--cc-color-text-primary);
+  transition: background-color var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-navbar__icon-btn:hover {
+  background-color: rgba(242, 240, 236, 0.12);
+}
+
+.cc-navbar__icon-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cc-navbar__login-link {
+  font-size: var(--cc-text-sm);
+  font-weight: 700;
+  letter-spacing: var(--cc-tracking-wide);
+  text-transform: uppercase;
+  padding: var(--cc-space-2xs) var(--cc-space-md);
+  border-radius: var(--cc-radius-sm);
+  background-color: var(--cc-color-crimson);
+  color: var(--cc-color-text-primary);
+  transition: background-color var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-navbar__login-link:hover {
+  background-color: var(--cc-color-crimson-dim);
+}
+
+/* --------------------------------------------------------------------------
+   Avatar + account dropdown
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__account {
+  position: relative;
+}
+
+.cc-navbar__avatar-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-3xs);
+  border-radius: var(--cc-radius-pill);
+  padding: var(--cc-space-3xs);
+}
+
+.cc-navbar__avatar-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--cc-color-gold-dim);
+}
+
+.cc-navbar__avatar-caret {
+  width: 12px;
+  height: 12px;
+  color: var(--cc-color-text-secondary);
+  transition: transform var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-navbar__account.is-open .cc-navbar__avatar-caret {
+  transform: rotate(180deg);
+}
+
+.cc-navbar__dropdown {
+  position: absolute;
+  top: calc(100% + var(--cc-space-sm));
+  right: 0;
+  min-width: 200px;
+  padding: var(--cc-space-2xs);
+  border-radius: var(--cc-radius-md);
+  background-color: var(--cc-color-glass-fill);
+  border: var(--cc-border-hairline);
+  backdrop-filter: var(--cc-blur-lg);
+  -webkit-backdrop-filter: var(--cc-blur-lg);
+  box-shadow: var(--cc-shadow-panel);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition:
+    opacity var(--cc-duration-fast) var(--cc-ease-standard),
+    transform var(--cc-duration-fast) var(--cc-ease-standard);
+  z-index: var(--cc-z-dropdown);
+}
+
+.cc-navbar__account.is-open .cc-navbar__dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cc-navbar__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--cc-space-2xs);
+  width: 100%;
+  padding: var(--cc-space-xs) var(--cc-space-sm);
+  border-radius: var(--cc-radius-sm);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-primary);
+  text-align: left;
+}
+
+.cc-navbar__dropdown-item:hover {
+  background-color: rgba(242, 240, 236, 0.1);
+}
+
+.cc-navbar__dropdown-item--danger {
+  color: var(--cc-color-crimson);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile hamburger toggle (menu itself styled in responsive.css breakpoints)
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+}
+
+.cc-navbar__toggle-bar {
+  width: 100%;
+  height: 2px;
+  background-color: var(--cc-color-text-primary);
+  border-radius: var(--cc-radius-pill);
+  transition:
+    transform var(--cc-duration-fast) var(--cc-ease-standard),
+    opacity var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-navbar__toggle.is-open .cc-navbar__toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.cc-navbar__toggle.is-open .cc-navbar__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.cc-navbar__toggle.is-open .cc-navbar__toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Search bar (expandable inline search used on non-search pages)
+   -------------------------------------------------------------------------- */
+
+.cc-navbar__search {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  opacity: 0;
+  transition:
+    width var(--cc-duration-base) var(--cc-ease-standard),
+    opacity var(--cc-duration-base) var(--cc-ease-standard);
+}
+
+.cc-navbar__search.is-expanded {
+  width: 220px;
+  opacity: 1;
+}
+
+.cc-navbar__search-input {
+  width: 100%;
+  padding: var(--cc-space-2xs) var(--cc-space-sm);
+  border-radius: var(--cc-radius-pill);
+  background-color: rgba(242, 240, 236, 0.1);
+  color: var(--cc-color-text-primary);
+  font-size: var(--cc-text-sm);
+}
+
+.cc-navbar__search-input::placeholder {
+  color: var(--cc-color-text-muted);
+}

@@ -1,0 +1,5 @@
+/* Favorites page refinements built on shared card and search styles. */
+.cc-favorites-page .cc-search-hero { padding-bottom: var(--cc-space-lg); }
+.cc-favorites-page .cc-search-filters { margin-bottom: var(--cc-space-xl); }
+.cc-favorites-page .cc-search-results { min-height: 16rem; }
+.cc-favorites-page .cc-search-empty-state { margin: var(--cc-space-2xl) auto; }

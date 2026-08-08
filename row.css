@@ -1,0 +1,220 @@
+/* ==========================================================================
+   CHI CINEMA — ROWS
+   File: styles/rows.css
+   Layer: 1 (depends on: variables.css, global.css, cards.css)
+
+   The horizontally-scrolling shelf of cards (Trending, Popular, genre
+   rows, etc.) used repeatedly down index.html and movie.html's
+   recommendations/similar sections. Scroll arrows are shown/hidden by
+   home.js via animation.js's observeResize() — this file just styles
+   both states (.can-scroll-prev / .can-scroll-next classes on the row).
+   ========================================================================== */
+
+.cc-row {
+  position: relative;
+  padding-block: var(--cc-space-md);
+}
+
+.cc-row__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-inline: var(--cc-container-pad);
+  margin-bottom: var(--cc-space-sm);
+}
+
+.cc-row__title {
+  font-family: var(--cc-font-display);
+  font-size: var(--cc-text-xl);
+  letter-spacing: var(--cc-tracking-marquee);
+  color: var(--cc-color-text-primary);
+}
+
+.cc-row__see-all {
+  font-family: var(--cc-font-body);
+  font-size: var(--cc-text-sm);
+  font-weight: 600;
+  color: var(--cc-color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cc-space-3xs);
+}
+
+.cc-row__see-all:hover {
+  color: var(--cc-color-gold);
+}
+
+.cc-row__see-all svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll wrap / track
+   -------------------------------------------------------------------------- */
+
+.cc-row__scroll-wrap {
+  position: relative;
+}
+
+.cc-row__track {
+  display: flex;
+  gap: var(--cc-space-sm);
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  padding-inline: var(--cc-container-pad);
+  padding-block: var(--cc-space-2xs); /* room for the hover scale on cards */
+  /* Hide native scrollbar — arrows are the primary scroll affordance,
+     while the track remains fully keyboard/touch scrollable */
+  scrollbar-width: none;
+}
+
+.cc-row__track::-webkit-scrollbar {
+  display: none;
+}
+
+.cc-row__track > * {
+  scroll-snap-align: start;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll arrows — absolutely positioned over the track edges, hidden
+   until the row actually overflows (home.js toggles these classes based
+   on ResizeObserver + scroll position) and hidden entirely on touch
+   devices where swipe is the natural interaction.
+   -------------------------------------------------------------------------- */
+
+.cc-row__arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--cc-z-row-card-hover);
+  color: var(--cc-color-text-primary);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-row__arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.cc-row__arrow--prev {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    var(--cc-color-stage-0) 20%,
+    transparent 100%
+  );
+  justify-content: flex-start;
+  padding-left: var(--cc-space-sm);
+}
+
+.cc-row__arrow--next {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    var(--cc-color-stage-0) 20%,
+    transparent 100%
+  );
+  justify-content: flex-end;
+  padding-right: var(--cc-space-sm);
+}
+
+.cc-row:hover .cc-row__arrow.is-enabled {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cc-row__arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--cc-radius-pill);
+  background-color: var(--cc-color-glass-fill);
+  border: var(--cc-border-hairline);
+  backdrop-filter: var(--cc-blur-md);
+  -webkit-backdrop-filter: var(--cc-blur-md);
+  transition:
+    background-color var(--cc-duration-fast) var(--cc-ease-standard),
+    transform var(--cc-duration-fast) var(--cc-ease-standard);
+}
+
+.cc-row__arrow-btn:hover {
+  background-color: var(--cc-color-stage-3);
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------------
+   Empty / loading state
+   -------------------------------------------------------------------------- */
+
+.cc-row__empty {
+  padding-inline: var(--cc-container-pad);
+  font-size: var(--cc-text-sm);
+  color: var(--cc-color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Filmstrip divider between major sections — the signature sprocket
+   motif, used sparingly (only between hero and first row, and between
+   major thematic groups) per the restraint principle from the design plan
+   -------------------------------------------------------------------------- */
+
+.cc-row--section-start {
+  margin-top: var(--cc-space-lg);
+}
+
+.cc-row--section-start::before {
+  content: "";
+  display: block;
+  height: var(--cc-sprocket-size);
+  margin-inline: var(--cc-container-pad);
+  margin-bottom: var(--cc-space-lg);
+  background-image: var(--cc-sprocket-pattern);
+  opacity: 0.5;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .cc-row__title {
+    font-size: var(--cc-text-lg);
+  }
+
+  .cc-row__arrow {
+    width: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cc-row__track {
+    gap: var(--cc-space-xs);
+  }
+
+  /* Touch devices: arrows off, native swipe scrolling is the interaction */
+  .cc-row__arrow {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .cc-row__header {
+    margin-bottom: var(--cc-space-xs);
+  }
+
+  .cc-row {
+    padding-block: var(--cc-space-sm);
+  }
+}
