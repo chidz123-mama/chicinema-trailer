@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <title>Create account · CHI CINEMA</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+    <link rel="stylesheet" href="styles/auth.css" />
+    <link rel="stylesheet" href="styles/register.css" />
+  </head>
+  <body class="cc-auth-page">
+    <main class="cc-auth-card">
+      <a class="cc-auth-brand" href="index.html">CHI <span>CINEMA</span></a>
+      <h1>Create an account</h1>
+      <p>Your account is stored in this browser only.</p>
+      <form class="cc-auth-form" id="register-form">
+        <label class="cc-auth-field">Username <input name="username" autocomplete="username" minlength="3" required /></label>
+        <label class="cc-auth-field">Email <input name="email" type="email" autocomplete="email" required /></label>
+        <label class="cc-auth-field">Password <input name="password" type="password" autocomplete="new-password" minlength="8" required /></label>
+        <div class="cc-password-strength" id="password-strength" aria-hidden="true">
+          <span class="cc-password-strength__bar"></span>
+          <span class="cc-password-strength__bar"></span>
+          <span class="cc-password-strength__bar"></span>
+        </div>
+        <p class="cc-auth-password-hint" id="password-strength-hint" aria-live="polite"></p>
+        <label class="cc-auth-field">Confirm password <input name="confirmPassword" type="password" autocomplete="new-password" minlength="8" required /></label>
+        <button class="cc-auth-submit" type="submit">Create account</button>
+      </form>
+      <p class="cc-auth-message" id="auth-message" role="alert" aria-live="polite"></p>
+      <p class="cc-auth-switch">Already have an account? <a href="login.html">Sign in</a>.</p>
+    </main>
+    <script type="module" src="scripts/register.js"></script>
+  </body>
+</html>

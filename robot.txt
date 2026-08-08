@@ -1,0 +1,16 @@
+# CHI CINEMA — robots.txt
+# Public pages are indexable; account/session-specific pages are not.
+
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /movie.html
+Allow: /search.html
+
+Disallow: /player.html
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /favorite.html
+Disallow: /profile.html
+
+Sitemap: https://chicinema.example.com/sitemap.xml

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile — CHI CINEMA</title>
+    <meta
+      name="description"
+      content="Manage your CHI CINEMA profile, favorites, and watch history."
+    />
+    <meta name="theme-color" content="#0b0b0f" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/card.css" />
+    <link rel="stylesheet" href="styles/row.css" />
+    <link rel="stylesheet" href="styles/movie.css" />
+    <link rel="stylesheet" href="styles/profile.css" />
+    <link rel="stylesheet" href="styles/responsive.css" />
+  </head>
+  <body>
+    <a class="cc-skip-link" href="#main-content">Skip to content</a>
+
+    <header class="cc-navbar" id="navbar">
+      <div class="cc-navbar__inner">
+        <a
+          class="cc-navbar__brand"
+          href="index.html"
+          aria-label="CHI CINEMA home"
+        >
+          <img
+            class="cc-navbar__brand-mark"
+            src="assets/logos/chi-cinema-mark.svg"
+            alt=""
+          />
+          <span class="cc-navbar__brand-text">CHI <span>CINEMA</span></span>
+        </a>
+
+        <nav class="cc-navbar__nav" aria-label="Primary">
+          <a class="cc-navbar__link" href="index.html" data-page="home">Home</a>
+          <a class="cc-navbar__link" href="index.html#row-popular">Movies</a>
+          <a class="cc-navbar__link" href="index.html#row-tv-shows">TV Shows</a>
+          <a class="cc-navbar__link" href="index.html#row-trending">Trending</a>
+          <a class="cc-navbar__link" href="favorite-page.html" data-page="favorite"
+            >Favorites</a
+          >
+          <a class="cc-navbar__link" href="search.html" data-page="search"
+            >Search</a
+          >
+        </nav>
+
+        <div class="cc-navbar__actions">
+          <div id="navbar-auth-slot"></div>
+          <button
+            class="cc-navbar__toggle"
+            type="button"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <span class="cc-navbar__toggle-bar"></span>
+            <span class="cc-navbar__toggle-bar"></span>
+            <span class="cc-navbar__toggle-bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- ================================================================
+         PROFILE HEADER
+         ================================================================ -->
+      <section class="cc-movie-section">
+        <div
+          class="cc-glass-panel cc-profile-header"
+          style="
+            padding: var(--cc-space-xl);
+            display: flex;
+            align-items: center;
+            gap: var(--cc-space-lg);
+            flex-wrap: wrap;
+          "
+        >
+          <img
+            id="profile-avatar"
+            src=""
+            alt="Your avatar"
+            style="
+              width: 96px;
+              height: 96px;
+              border-radius: 50%;
+              object-fit: cover;
+              border: 2px solid var(--cc-color-gold-dim);
+            "
+          />
+
+          <div style="flex: 1; min-width: 200px">
+            <h1
+              id="profile-username"
+              style="
+                font-family: var(--cc-font-display);
+                font-size: var(--cc-text-xl);
+                letter-spacing: var(--cc-tracking-marquee);
+                color: var(--cc-color-text-primary);
+              "
+            >
+              —
+            </h1>
+            <p
+              id="profile-email"
+              style="
+                color: var(--cc-color-text-secondary);
+                margin-top: var(--cc-space-3xs);
+              "
+            >
+              —
+            </p>
+            <p
+              id="profile-member-since"
+              class="cc-text-mono"
+              style="margin-top: var(--cc-space-2xs)"
+            >
+              —
+            </p>
+          </div>
+
+          <button
+            class="cc-btn cc-btn--ghost"
+            id="profile-logout-btn"
+            type="button"
+          >
+            Log Out
+          </button>
+        </div>
+      </section>
+
+      <!-- ================================================================
+         STATS
+         ================================================================ -->
+      <section
+        class="cc-movie-stats"
+        id="profile-stats"
+        aria-label="Account statistics"
+      ></section>
+
+      <!-- ================================================================
+         CONTINUE WATCHING
+         ================================================================ -->
+      <section
+        class="cc-row"
+        id="continue-watching-section"
+        aria-label="Continue watching"
+        hidden
+      >
+        <div class="cc-row__header">
+          <h2 class="cc-row__title">Continue Watching</h2>
+        </div>
+        <div class="cc-row__scroll-wrap">
+          <div class="cc-row__track" id="continue-watching-track"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+         FAVORITES PREVIEW
+         ================================================================ -->
+      <section
+        class="cc-row"
+        id="favorites-preview-section"
+        aria-label="Favorites preview"
+        hidden
+      >
+        <div class="cc-row__header">
+          <h2 class="cc-row__title">My Favorites</h2>
+          <a class="cc-row__see-all" href="favorite-page.html">See All ›</a>
+        </div>
+        <div class="cc-row__scroll-wrap">
+          <div class="cc-row__track" id="favorites-preview-track"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+         WATCH HISTORY (text list — history entries store no poster)
+         ================================================================ -->
+      <section
+        class="cc-movie-section"
+        id="history-section"
+        aria-label="Watch history"
+        hidden
+      >
+        <h2 class="cc-movie-section__title">Watch History</h2>
+        <div class="cc-crew-list" id="history-list"></div>
+      </section>
+    </main>
+
+    <footer class="cc-footer">
+      <div class="cc-footer__inner">
+        <div class="cc-footer__top">
+          <div class="cc-footer__brand">
+            <span class="cc-footer__brand-text">CHI <span>CINEMA</span></span>
+            <p class="cc-footer__tagline">
+              A Netflix-inspired streaming experience for discovering movies and
+              shows worth your time.
+            </p>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">Browse</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="index.html#row-trending"
+                >Trending</a
+              >
+              <a class="cc-footer__link" href="index.html#row-popular"
+                >Popular</a
+              >
+              <a class="cc-footer__link" href="index.html#row-top-rated"
+                >Top Rated</a
+              >
+              <a class="cc-footer__link" href="index.html#row-tv-shows"
+                >TV Shows</a
+              >
+            </div>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">Account</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="login.html">Login</a>
+              <a class="cc-footer__link" href="register.html">Register</a>
+              <a class="cc-footer__link" href="profile.html">Profile</a>
+              <a class="cc-footer__link" href="favorite-page.html">Favorites</a>
+            </div>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">About</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="#">How It Works</a>
+              <a class="cc-footer__link" href="#">Contact</a>
+              <a class="cc-footer__link" href="#">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+        <div class="cc-footer__bottom">
+          <span class="cc-footer__copyright"
+            >© 2026 CHI CINEMA. All rights reserved.</span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="scripts/profile.js"></script>
+  </body>
+</html>

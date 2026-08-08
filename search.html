@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search — CHI CINEMA</title>
+    <meta
+      name="description"
+      content="Search movies and TV shows on CHI CINEMA."
+    />
+    <meta name="theme-color" content="#0b0b0f" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/navbar.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/card.css" />
+    <link rel="stylesheet" href="styles/search.css" />
+    <link rel="stylesheet" href="styles/responsive.css" />
+  </head>
+  <body>
+    <a class="cc-skip-link" href="#main-content">Skip to content</a>
+
+    <header class="cc-navbar" id="navbar">
+      <div class="cc-navbar__inner">
+        <a
+          class="cc-navbar__brand"
+          href="index.html"
+          aria-label="CHI CINEMA home"
+        >
+          <img
+            class="cc-navbar__brand-mark"
+            src="assets/logos/chi-cinema-mark.svg"
+            alt=""
+          />
+          <span class="cc-navbar__brand-text">CHI <span>CINEMA</span></span>
+        </a>
+
+        <nav class="cc-navbar__nav" aria-label="Main navigation">
+          <a class="cc-navbar__link" href="index.html" data-page="home">Home</a>
+          <a class="cc-navbar__link" href="index.html#row-popular">Phim</a>
+          <a class="cc-navbar__link" href="index.html#row-tv-shows">TV Shows</a>
+          <a class="cc-navbar__link" href="index.html#row-trending">Trending</a>
+          <a class="cc-navbar__link" href="favorite-page.html" data-page="favorite"
+            >Favorites</a
+          >
+          <a class="cc-navbar__link" href="search.html" data-page="search"
+            >Search</a>
+          >
+        </nav>
+
+        <div class="cc-navbar__actions">
+          <div id="navbar-auth-slot"></div>
+          <button
+            class="cc-navbar__toggle"
+            type="button"
+            aria-label="Open or close menu"
+            aria-expanded="false"
+          >
+            <span class="cc-navbar__toggle-bar"></span>
+            <span class="cc-navbar__toggle-bar"></span>
+            <span class="cc-navbar__toggle-bar"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- ================================================================
+         SEARCH BAR
+         ================================================================ -->
+      <section class="cc-search-hero">
+        <h1 class="cc-search-hero__title">Find something to watch</h1>
+
+        <div class="cc-search-bar" id="search-bar">
+          <div class="cc-search-input-wrap">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              class="cc-search-input"
+              id="search-input"
+              type="search"
+              placeholder="Search movies, TV shows…"
+              autocomplete="off"
+              aria-label="Search movies and TV shows"
+            />
+            <button
+              class="cc-search-clear-btn"
+              id="search-clear-btn"
+              type="button"
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div
+            class="cc-search-suggestions"
+            id="search-suggestions"
+            hidden
+          ></div>
+        </div>
+
+        <!-- Recent searches -->
+        <div class="cc-search-recent" id="search-recent" hidden>
+          <div class="cc-search-recent__header">
+            <span class="cc-search-recent__title">Recent searches</span>
+            <button
+              class="cc-search-recent__clear"
+              id="search-recent-clear"
+              type="button"
+            >
+              Clear all
+            </button>
+          </div>
+          <div class="cc-search-recent__chips" id="search-recent-chips"></div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+         FILTER TABS
+         ================================================================ -->
+      <div class="cc-search-filters">
+        <button
+          class="cc-search-filter-tab is-active"
+          type="button"
+          data-filter="all"
+        >
+          All
+        </button>
+        <button class="cc-search-filter-tab" type="button" data-filter="movie">
+          Movies
+        </button>
+        <button class="cc-search-filter-tab" type="button" data-filter="tv">
+          TV Shows
+        </button>
+      </div>
+
+      <!-- ================================================================
+         RESULTS
+         ================================================================ -->
+      <section class="cc-search-results" id="search-results" hidden>
+        <p class="cc-search-results__meta" id="search-results-meta" hidden></p>
+        <div class="cc-search-results__grid" id="search-results-grid"></div>
+        <button
+          class="cc-btn cc-btn--ghost cc-search-load-more"
+          id="search-load-more"
+          type="button"
+          hidden
+        >
+          Load more
+        </button>
+      </section>
+
+      <div class="cc-search-empty-state" id="search-empty-state" hidden>
+        <svg
+          class="cc-search-empty-state__icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <p class="cc-search-empty-state__title">No results found</p>
+        <p>Try a movie title, actor, or another keyword.</p>
+      </div>
+    </main>
+
+    <footer class="cc-footer">
+      <div class="cc-footer__inner">
+        <div class="cc-footer__top">
+          <div class="cc-footer__brand">
+            <span class="cc-footer__brand-text">CHI <span>CINEMA</span></span>
+            <p class="cc-footer__tagline">
+              A Netflix-inspired streaming experience for discovering movies and
+              shows worth your time.
+            </p>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">Explore</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="index.html#row-trending"
+                >Trending</a
+              >
+              <a class="cc-footer__link" href="index.html#row-popular"
+                >Popular</a
+              >
+              <a class="cc-footer__link" href="index.html#row-top-rated"
+                >Top Rated</a
+              >
+              <a class="cc-footer__link" href="index.html#row-tv-shows"
+                >TV Shows</a
+              >
+            </div>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">Account</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="login.html">Sign in</a>
+              <a class="cc-footer__link" href="register.html">Register</a>
+              <a class="cc-footer__link" href="profile.html">Profile</a>
+              <a class="cc-footer__link" href="favorite-page.html">Favorites</a>
+            </div>
+          </div>
+          <div class="cc-footer__column">
+            <h3 class="cc-footer__column-title">About</h3>
+            <div class="cc-footer__link-list">
+              <a class="cc-footer__link" href="#">How it works</a>
+              <a class="cc-footer__link" href="#">Contact</a>
+              <a class="cc-footer__link" href="#">Privacy policy</a>
+            </div>
+          </div>
+        </div>
+        <div class="cc-footer__bottom">
+          <span class="cc-footer__copyright"
+            >© 2026 CHI CINEMA. All rights reserved.</span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="scripts/search.js"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <title>Sign in · CHI CINEMA</title>
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+    <link rel="stylesheet" href="styles/auth.css" />
+  </head>
+  <body class="cc-auth-page">
+    <main class="cc-auth-card">
+      <a class="cc-auth-brand" href="index.html">CHI <span>CINEMA</span></a>
+      <h1>Welcome back</h1>
+      <p>Sign in to access your account in this browser.</p>
+      <form class="cc-auth-form" id="login-form">
+        <label class="cc-auth-field">Username <input name="username" autocomplete="username" required /></label>
+        <label class="cc-auth-field">Password <input name="password" type="password" autocomplete="current-password" required /></label>
+        <label class="cc-auth-check"><input name="rememberMe" type="checkbox" /> Keep me signed in for 30 days</label>
+        <button class="cc-auth-submit" type="submit">Sign in</button>
+      </form>
+      <p class="cc-auth-message" id="auth-message" role="alert" aria-live="polite"></p>
+      <p class="cc-auth-switch">New here? <a href="register.html">Create an account</a>.</p>
+    </main>
+    <script type="module" src="scripts/login.js"></script>
+  </body>
+</html>

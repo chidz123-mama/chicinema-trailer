@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHI CINEMA — Now playing</title>
+    <meta
+      name="description"
+      content="Watch movies and TV shows on CHI CINEMA."
+    />
+    <meta name="theme-color" content="#000000" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg" />
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/variables.css" />
+    <link rel="stylesheet" href="styles/global.css" />
+    <link rel="stylesheet" href="styles/player.css" />
+    <link rel="stylesheet" href="styles/responsive.css" />
+  </head>
+  <body class="cc-player-body">
+    <a class="cc-skip-link" href="#player-stage">Skip to player</a>
+
+    <div class="cc-player" id="player">
+      <!-- ================================================================
+         TOP BAR — back button + title (this page skips the full site
+         navbar by design, see player.js's init() comment)
+         ================================================================ -->
+      <div class="cc-player__top-bar">
+        <a
+          class="cc-player__back-btn"
+          id="player-back-btn"
+          href="index.html"
+          aria-label="Back to details"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+        </a>
+        <h1 class="cc-player__title" id="player-title">Loading…</h1>
+      </div>
+
+      <!-- ================================================================
+         STAGE — video element or YouTube iframe is injected here by
+         player.js depending on FEATURE_FLAGS.useLocalMp4
+         ================================================================ -->
+      <div class="cc-player__stage" id="player-stage"></div>
+
+      <!-- Loading spinner -->
+      <div class="cc-player__loading" id="player-loading">
+        <div class="cc-player__spinner"></div>
+      </div>
+
+      <!-- Center play/pause button (local MP4 mode only) -->
+      <button
+        class="cc-player__center-btn"
+        id="player-center-btn"
+        type="button"
+        aria-label="Play"
+        hidden
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </button>
+
+      <!-- Fallback notice (shown briefly if a local file wasn't found) -->
+      <div
+        class="cc-player__fallback-notice"
+        id="player-fallback-notice"
+        hidden
+      >
+        Playing a trailer — the full movie file is not available yet.
+      </div>
+
+      <!-- ================================================================
+         CUSTOM CONTROL BAR (local MP4 mode only — hidden entirely in
+         YouTube fallback mode via .cc-player--youtube-mode in CSS)
+         ================================================================ -->
+      <div class="cc-player__controls">
+        <div class="cc-player__progress" id="player-progress">
+          <div class="cc-player__progress-track">
+            <div
+              class="cc-player__progress-buffered"
+              id="player-progress-buffered"
+            ></div>
+            <div
+              class="cc-player__progress-fill"
+              id="player-progress-fill"
+            ></div>
+            <div
+              class="cc-player__progress-thumb"
+              id="player-progress-thumb"
+            ></div>
+          </div>
+        </div>
+
+        <div class="cc-player__controls-row">
+          <button
+            class="cc-player__btn"
+            id="player-play-pause"
+            type="button"
+            aria-label="Play"
+            data-state="paused"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+
+          <div class="cc-player__volume">
+            <button
+              class="cc-player__btn"
+              id="player-mute-btn"
+              type="button"
+              aria-label="Mute"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 10v4h4l5 5V5L7 10H3z" />
+              </svg>
+            </button>
+            <input
+              class="cc-player__volume-slider"
+              id="player-volume-slider"
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value="1"
+              aria-label="Volume"
+            />
+          </div>
+
+          <span class="cc-player__time" id="player-time">00:00 / 00:00</span>
+
+          <div class="cc-player__controls-row cc-player__controls-row--right">
+            <select
+              class="cc-player__speed-select"
+              id="player-speed-select"
+              aria-label="Playback speed"
+            >
+              <option value="0.5">0.5x</option>
+              <option value="0.75">0.75x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.25">1.25x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+
+            <button
+              class="cc-player__btn"
+              id="player-pip-btn"
+              type="button"
+              aria-label="Picture in picture"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <rect
+                  x="12"
+                  y="12"
+                  width="7"
+                  height="6"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+
+            <button
+              class="cc-player__btn"
+              id="player-fullscreen-btn"
+              type="button"
+              aria-label="Fullscreen"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="scripts/player.js"></script>
+  </body>
+</html>
